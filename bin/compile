@@ -4,7 +4,6 @@ set -e
 
 BP_DIR=$(cd $(dirname ${0:-}); cd ..; pwd)
 BUILD_DIR=$1
-CACHE_DIR=$2
 CLIENT_BUILD_DIR=$BUILD_DIR/.oracle-build
 
 echo "-----> Installing Oracle Client"
@@ -18,6 +17,9 @@ unzip instantclient-basic-linux.x64-21.8.0.0.0dbru.zip && rm instantclient-basic
 unzip instantclient-sdk-linux.x64-21.8.0.0.0dbru.zip && rm instantclient-sdk-linux.x64-21.8.0.0.0dbru.zip
 mv instantclient{_21_8,}
 cd instantclient
+
+echo "-----> Creating sqlnet.ora config"
+echo "SSL_CLIENT_AUTHENTICATION=false" > ./network/admin/sqlnet.ora
 
 cat <<EOT > $BP_DIR/export
 export LD_LIBRARY_PATH=$CLIENT_BUILD_DIR/instantclient/:$BUILD_DIR/.apt/lib/x86_64-linux-gnu/${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}
@@ -33,4 +35,3 @@ fi
 
 cp $BP_DIR/profile/* $BUILD_DIR/.profile.d/
 
-echo "-----> Oracle Client Installed"
