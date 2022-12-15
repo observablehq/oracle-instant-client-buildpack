@@ -19,7 +19,7 @@ mv instantclient{_21_8,}
 cd instantclient
 
 echo "-----> Copying test connection wallet"
-cp -R $BUILD_DIR/test/oracle/network/admin $CLIENT_BUILD_DIR/instantclient/network/admin/
+cp -R $BUILD_DIR/test/oracle/network/admin $CLIENT_BUILD_DIR/instantclient/network/
 
 cat <<EOT > $BP_DIR/export
 export LD_LIBRARY_PATH=$CLIENT_BUILD_DIR/instantclient/:$BUILD_DIR/.apt/lib/x86_64-linux-gnu/${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}
