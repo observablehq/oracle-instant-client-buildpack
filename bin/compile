@@ -12,11 +12,11 @@ APP_DIR=$BUILD_DIR
 if [ -f "${ENV_DIR}/APP_BASE" ]; then
   echo "       Setting up APP_DIR"
   APP_DIR="${APP_DIR}/$(cat "${ENV_DIR}/APP_BASE")"
-  echo "       APP_DIR set to $APP_DIR"
 else
   echo "       No APP_BASE found"
   ls -l $ENV_DIR
 fi
+echo "       APP_DIR set to $APP_DIR"
 
 echo "-----> Installing Oracle Client"
 
