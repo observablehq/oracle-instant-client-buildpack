@@ -8,7 +8,11 @@ CLIENT_BUILD_DIR=$BUILD_DIR/.oracle-build
 APP_DIR=$BUILD_DIR
 
 if [ -f "${ENV_DIR}/APP_BASE" ]; then
+  echo "       Setting up APP_BASE"
   APP_DIR="$(cat "${ENV_DIR}/APP_BASE")/${APPDIR}"
+else
+  echo "       No APP_BASE found"
+  ls -l $ENV_DIR
 fi
 
 echo "-----> Installing Oracle Client"
