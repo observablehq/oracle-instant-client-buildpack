@@ -5,6 +5,11 @@ set -e
 BP_DIR=$(cd $(dirname ${0:-}); cd ..; pwd)
 BUILD_DIR=$1
 CLIENT_BUILD_DIR=$BUILD_DIR/.oracle-build
+APP_DIR=$BUILD_DIR
+
+if [ -f "${ENV_DIR}/APP_BASE" ]; then
+  APP_DIR="$(cat "${ENV_DIR}/APP_BASE)/${APPDIR}"
+fi
 
 echo "-----> Installing Oracle Client"
 
@@ -19,7 +24,7 @@ mv instantclient{_21_8,}
 cd instantclient
 
 echo "-----> Copying test connection wallet"
-cp -R $BUILD_DIR/test/oracle/network/admin $CLIENT_BUILD_DIR/instantclient/network/
+cp -R $APP_DIR/test/oracle/network/admin $CLIENT_BUILD_DIR/instantclient/network/
 
 cat <<EOT > $BP_DIR/export
 export LD_LIBRARY_PATH=$CLIENT_BUILD_DIR/instantclient/:$BUILD_DIR/.apt/lib/x86_64-linux-gnu/${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}
@@ -34,4 +39,3 @@ if [ ! -d "$BUILD_DIR/.profile.d" ]; then
 fi
 
 cp $BP_DIR/profile/* $BUILD_DIR/.profile.d/
-
